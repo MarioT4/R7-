@@ -3,6 +3,7 @@ let table;
 let index = 0;
 let dx;
 let indicator = 1;
+ 
 function preload() {
   table = loadTable('data.csv', 'csv', 'header');
 }
@@ -25,13 +26,16 @@ function draw() {
   text(' yellow is the lowest temp of that day', width/2, 80)
   const startDate = table.getString(index,'date');
   const endDate = table.getString(index+6,'date');
+  // const startYear = table.getString(index,'record_max_temp_year');
+  // const endYear = table.getString(index+6,'record_max_temp_year');
   text( `data for the week from ${startDate}-${endDate}`,width/2,height/10);
+  // text(`data for the record temp year ${startYear}-${endYear}`,width/2, height/10)
   drawWeek(index);
   noLoop();
 }
 
 function keyPressed() {
-  if (key === '+') {
+  if (key === '=') {
   index += 7;
   redraw();
   }
@@ -92,14 +96,14 @@ function drawWeek(startingRow) {
   }
 
   if (indicator == 1) {
-    fill('Gainsboro')
-    rect(0,0, 10000,10000)
-    fill('white')
-    textSize(40)
-    text('some extra data',width/2,height/13)
-    for (let i = 0; i < 7; i++) {
-    const recordMin = table.getNum(startingRow + i, 'record_min_temp');
-    const recordMax = table.getNum(startingRow + i, 'record_max_temp');
+    fill('Gainsboro');
+    rect(0,0, 10000,10000);
+    fill('white');
+    textSize(20);
+    text('some extra data',width/2,height/13);
+  for (let i = 0; i < 7; i++) {
+    const recordMin = table.getNum(startingRow + i, 'record_min_temp_year');
+    const recordMax = table.getNum(startingRow + i, 'record_max_temp_year');
     const actual_mean_temp = table.getNum(startingRow + i, 'actual_mean_temp');
     const actual_max_temp = table.getNum(startingRow + i, 'actual_max_temp');    
     const actual_min_temp = table.getNum(startingRow + i, 'actual_min_temp');        
@@ -133,7 +137,15 @@ function drawWeek(startingRow) {
 
      text(recordMax,x,100);
      text(recordMin,x,height);
-  }
+fill('white')
+     text('top is the year of the maximum temp for that day',width/2, height/2)
+     text('bottom is the year of the minimum temp for that day',width/2, height/1.5)
+
+
+    
+    
     
   }
 }
+  }
+
